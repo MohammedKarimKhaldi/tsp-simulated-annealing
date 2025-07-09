@@ -147,6 +147,20 @@ These videos show how each algorithm progressively improves the TSP route. Notic
 - **Simulated Annealing**: Makes gradual improvements with occasional larger jumps
 - **Quantum Annealing**: Shows more dramatic improvements, especially in early iterations, due to quantum tunneling effects
 
+## Solution Evolution (Animated)
+
+Below are animated GIFs showing the evolution of the TSP solution using both Simulated Annealing and Quantum Annealing. These GIFs are compatible with GitHub and will display directly in the README.
+
+### Simulated Annealing
+
+![Simulated Annealing Evolution](results/simulated_annealing_evolution.gif)
+
+### Quantum Annealing
+
+![Quantum Annealing Evolution](results/quantum_annealing_evolution.gif)
+
+---
+
 ## Running Examples
 
 ```bash

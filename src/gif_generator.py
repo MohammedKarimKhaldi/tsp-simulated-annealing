@@ -5,7 +5,7 @@ from matplotlib.figure import Figure
 import numpy as np
 from typing import List, Tuple, Optional, Dict, Any
 import os
-from .tsp_solver import TSPSolution, AnnealingType
+from tsp_solver import TSPSolution, AnnealingType
 
 class TSPGifGenerator:
     """
@@ -358,4 +358,73 @@ class TSPGifGenerator:
         plt.close()
         
         print(f"Cost evolution plot saved to: {output_path}")
+        return output_path 
+
+    def create_github_compatible_gif(self, solution: TSPSolution, 
+                                   output_path: str,
+                                   fps: int = 3,
+                                   duration_per_frame: float = 0.3) -> str:
+        """
+        Create a GitHub-compatible GIF showing the evolution of a TSP solution.
+        GitHub supports GIFs but not MP4 videos in README files.
+        
+        Args:
+            solution: TSP solution with evolution history
+            output_path: Path to save the GIF
+            fps: Frames per second (lower for smaller file size)
+            duration_per_frame: Duration to show each frame (seconds)
+            
+        Returns:
+            Path to the created GIF
+        """
+        if not solution.evolution_history:
+            raise ValueError("Solution must have evolution history enabled")
+        
+        print(f"Creating GitHub-compatible GIF for {solution.annealing_type.value} annealing...")
+        
+        # Generate city coordinates
+        city_coords = self.generate_city_coordinates(solution.route)
+        
+        # Create frames (sample every few frames to keep file size reasonable)
+        frames = []
+        step = max(1, len(solution.evolution_history) // 20)  # Max 20 frames for GitHub
+        
+        for i in range(0, len(solution.evolution_history), step):
+            iteration, cost, route = solution.evolution_history[i]
+            fig = self.create_route_frame(
+                route, cost, iteration,
+                f"{solution.annealing_type.value.title()} Annealing",
+                city_coords
+            )
+            fig.set_size_inches(6, 5)  # Fixed size for all frames
+            fig.tight_layout()
+            # Convert figure to image
+            import io
+            buf = io.BytesIO()
+            fig.savefig(buf, format='png', dpi=72, bbox_inches='tight')
+            buf.seek(0)
+            import imageio
+            img = imageio.imread(buf)
+            frames.append(img)
+            buf.close()
+            plt.close(fig)
+        
+        # Add final frame a few times to show the result
+        final_frame = frames[-1]
+        for _ in range(3):
+            frames.append(final_frame)
+        
+        # Create GIF using imageio
+        try:
+            import imageio
+        except ImportError:
+            print("imageio not found. Installing...")
+            import subprocess
+            subprocess.check_call(["pip", "install", "imageio"])
+            import imageio
+        
+        # Save as GIF optimized for GitHub
+        imageio.mimsave(output_path, frames, fps=fps, duration=duration_per_frame)
+        
+        print(f"GitHub-compatible GIF saved to: {output_path}")
         return output_path 
