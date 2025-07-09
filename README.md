@@ -1,6 +1,6 @@
 # TSP Solver with Simulated Annealing and Quantum Annealing
 
-A comprehensive Traveling Salesman Problem (TSP) solver that implements both classical simulated annealing and quantum-inspired annealing approaches. This project provides a complete framework for solving TSP instances with various problem characteristics, comparing the performance of different optimization methods, and visualizing the solution evolution through animated MP4 videos.
+A comprehensive Traveling Salesman Problem (TSP) solver that implements both classical simulated annealing and quantum-inspired annealing approaches. This project provides a complete framework for solving TSP instances with various problem characteristics, comparing the performance of different optimization methods, and visualizing the solution evolution through animated GIFs (fully compatible with GitHub README embedding).
 
 ## Features
 
@@ -24,8 +24,8 @@ A comprehensive Traveling Salesman Problem (TSP) solver that implements both cla
 - **Parameter Sensitivity**: Analysis of algorithm sensitivity to parameters
 - **Distance Matrix Heatmaps**: Visual representation of problem structure
 - **Summary Reports**: Detailed text reports of optimization results
-- **Animated Evolution**: MP4 videos showing solution improvement over time
-- **Non-looping Animations**: Videos that play once and stop for clear analysis
+- **Animated Evolution**: GIFs showing solution improvement over time (GitHub-compatible)
+- **Non-looping Animations**: GIFs that play once and stop for clear analysis
 
 ### 💾 **Data Management**
 - **Solution Persistence**: Save and load solutions in JSON format
@@ -118,7 +118,6 @@ Quantum annealing extends classical simulated annealing by incorporating quantum
 ```python
 from src import TSPSolver, TSPDataGenerator, TSPGifGenerator
 
-# Generate TSP instance and solve
 generator = TSPDataGenerator(seed=42)
 distance_matrix = generator.generate_euclidean_tsp(n_cities=15)
 solver = TSPSolver(distance_matrix)
@@ -127,25 +126,11 @@ solver = TSPSolver(distance_matrix)
 sa_solution = solver.simulated_annealing(track_evolution=True, max_iterations=3000)
 qa_solution = solver.quantum_annealing(track_evolution=True, max_iterations=3000)
 
-# Generate videos
+# Generate GIFs (GitHub-compatible)
 gifgen = TSPGifGenerator(distance_matrix)
-gifgen.create_evolution_video(sa_solution, 'results/sa_evolution.mp4', fps=5)
-gifgen.create_evolution_video(qa_solution, 'results/qa_evolution.mp4', fps=5)
+gifgen.create_github_compatible_gif(sa_solution, 'results/simulated_annealing_evolution.gif')
+gifgen.create_github_compatible_gif(qa_solution, 'results/quantum_annealing_evolution.gif')
 ```
-
-## Example Videos
-
-Watch the solution evolution for both algorithms:
-
-### Simulated Annealing Evolution
-![Simulated Annealing](results/sa_evolution.mp4)
-
-### Quantum Annealing Evolution  
-![Quantum Annealing](results/qa_evolution.mp4)
-
-These videos show how each algorithm progressively improves the TSP route. Notice how:
-- **Simulated Annealing**: Makes gradual improvements with occasional larger jumps
-- **Quantum Annealing**: Shows more dramatic improvements, especially in early iterations, due to quantum tunneling effects
 
 ## Solution Evolution (Animated)
 
@@ -170,8 +155,8 @@ python examples/basic_usage.py
 # Comprehensive benchmark
 python examples/benchmark_comparison.py
 
-# Generate evolution videos
-python examples/gif_demo.py
+# Generate evolution GIFs
+python examples/generate_github_gifs.py
 ```
 
 ## Project Structure
@@ -184,7 +169,7 @@ tsp-simulated-annealing/
 │   ├── visualizer.py        # Static visualization tools
 │   └── gif_generator.py     # Animated visualization tools
 ├── examples/                # Usage examples
-├── results/                 # Output files and videos
+├── results/                 # Output files and GIFs
 └── README.md               # This file
 ```
 
@@ -206,7 +191,7 @@ tsp-simulated-annealing/
 - Quantum annealing often finds 5-15% better solutions
 - Both methods have similar computational complexity
 - Quantum annealing is more robust to parameter variations
-- Solution evolution videos clearly show the difference in convergence behavior
+- Solution evolution GIFs clearly show the difference in convergence behavior
 
 ## Contributing
 
